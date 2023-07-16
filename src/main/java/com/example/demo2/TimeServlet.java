@@ -12,7 +12,7 @@ import java.util.TimeZone;
 
 
 @WebServlet(value = "/time")
-public class HelloResource extends HttpServlet {
+public class TimeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=utf-8");
@@ -24,8 +24,6 @@ public class HelloResource extends HttpServlet {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 		dateFormat.setTimeZone(TimeZone.getTimeZone(queryTimeZone));
 		String currentTime = dateFormat.format(currentDate);
-
-
 
 
 
