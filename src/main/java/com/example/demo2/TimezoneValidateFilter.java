@@ -16,7 +16,7 @@ public class TimezoneValidateFilter implements Filter {
 
 		String timezoneParam = httpRequest.getParameter("timezone");
 		String[] split = timezoneParam.split("-+");
-		System.out.println();
+
 
 		if(Integer.parseInt(split[1])>=24)
 		{
