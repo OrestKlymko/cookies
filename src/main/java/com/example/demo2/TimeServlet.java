@@ -1,34 +1,30 @@
 package com.example.demo2;
-
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 
-@WebServlet(value = "/time")
+@WebServlet("/time")
 public class TimeServlet extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws  IOException {
 		resp.setContentType("text/html; charset=utf-8");
 
 		String queryTimeZone = req.getParameter("timezone");
-		if(queryTimeZone==null) queryTimeZone="UTC";
 
-		Date currentDate = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-		dateFormat.setTimeZone(TimeZone.getTimeZone(queryTimeZone));
-		String currentTime = dateFormat.format(currentDate);
+		if (queryTimeZone==null) queryTimeZone = "UTC";
+		if (queryTimeZone.contains(" ")) queryTimeZone=queryTimeZone.replace(" ","+");
+		OffsetDateTime now = OffsetDateTime.now( ZoneId.of(queryTimeZone));
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z").withZone(ZoneId.of(queryTimeZone));
+		String formatDate = now.format(dateTimeFormatter);
 
 
-
-		resp.getWriter().write(currentTime);
+		resp.getWriter().write(formatDate);
 		resp.getWriter().close();
 	}
-
 }
