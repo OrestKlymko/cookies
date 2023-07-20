@@ -16,14 +16,15 @@ public class TimezoneValidateFilter implements Filter {
 
 
 		String timezoneParam = httpRequest.getParameter("timezone");
-		if(timezoneParam!=null) {
+
+		if(timezoneParam!=null&&!timezoneParam.equals("UTC")) {
 			String[] split = timezoneParam.split("[-+]");
 
-		if(Integer.parseInt(split[1])>=19)
-		{
-			httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
-			return;
-		}
+
+			if (!split[0].equals("UTC") || Integer.parseInt(split[1]) >= 19) {
+				httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
+				return;
+			}
 		}
 		chain.doFilter(request, response);
 	}
