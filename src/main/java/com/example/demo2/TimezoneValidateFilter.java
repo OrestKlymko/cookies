@@ -1,8 +1,11 @@
 package com.example.demo2;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 
@@ -17,7 +20,9 @@ public class TimezoneValidateFilter implements Filter {
 
 		String timezoneParam = httpRequest.getParameter("timezone");
 
-		if(timezoneParam!=null&&!timezoneParam.equals("UTC")) {
+
+
+		if (timezoneParam != null && !timezoneParam.equals("UTC")) {
 			String[] split = timezoneParam.split("[-+]");
 
 
@@ -25,7 +30,14 @@ public class TimezoneValidateFilter implements Filter {
 				httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
 				return;
 			}
+
+
 		}
+		if(timezoneParam != null) {
+			((HttpServletResponse) response).addCookie(new Cookie("lastTimezone", timezoneParam));
+		}
+
+
 		chain.doFilter(request, response);
 	}
 
