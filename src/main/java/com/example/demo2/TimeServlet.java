@@ -18,10 +18,8 @@ public class TimeServlet extends HttpServlet {
 		String queryTimeZone = req.getParameter("timezone");
 
 		if (queryTimeZone==null) queryTimeZone = "UTC";
-		if(!queryTimeZone.contains("UTC")) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
-			return;
-		}
+
+
 		OffsetDateTime now = OffsetDateTime.now( ZoneId.of(queryTimeZone));
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z").withZone(ZoneId.of(queryTimeZone));
 		String formatDate = now.format(dateTimeFormatter);
