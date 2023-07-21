@@ -60,8 +60,9 @@ public class TimeServlet extends HttpServlet {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z").withZone(ZoneId.of(queryTimeZone));
 		String formatDate = now.format(dateTimeFormatter);
 
-
-		resp.addCookie(new Cookie("lastTimezone", queryTimeZone));
+		if(!queryTimeZone.equals("UTC")) {
+			resp.addCookie(new Cookie("lastTimezone", queryTimeZone));
+		}
 
 		Context simpleContext = new Context(req.getLocale());
 		simpleContext.setVariable("time", formatDate);
