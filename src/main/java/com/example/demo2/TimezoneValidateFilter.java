@@ -21,7 +21,6 @@ public class TimezoneValidateFilter implements Filter {
 		String timezoneParam = httpRequest.getParameter("timezone");
 
 
-
 		if (timezoneParam != null && !timezoneParam.equals("UTC")) {
 			String[] split = timezoneParam.split("[-+]");
 
@@ -31,10 +30,6 @@ public class TimezoneValidateFilter implements Filter {
 				return;
 			}
 
-
-		}
-		if(timezoneParam != null) {
-			((HttpServletResponse) response).addCookie(new Cookie("lastTimezone", timezoneParam));
 		}
 
 

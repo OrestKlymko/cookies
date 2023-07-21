@@ -25,7 +25,7 @@ public class TimeServlet extends HttpServlet {
 	public void init() throws ServletException {
 		engine = new TemplateEngine();
 		FileTemplateResolver resolver = new FileTemplateResolver();
-		resolver.setPrefix("./templates/");
+		resolver.setPrefix("/Users/orestklymko/Desktop/klasjgd/templates/");
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode("HTML5");
 		resolver.setOrder(engine.getTemplateResolvers().size());
@@ -60,6 +60,8 @@ public class TimeServlet extends HttpServlet {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z").withZone(ZoneId.of(queryTimeZone));
 		String formatDate = now.format(dateTimeFormatter);
 
+
+		resp.addCookie(new Cookie("lastTimezone", queryTimeZone));
 
 		Context simpleContext = new Context(req.getLocale());
 		simpleContext.setVariable("time", formatDate);
